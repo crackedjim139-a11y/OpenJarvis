@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "total_clones": 46364,
   "last_updated": "2026-05-05T08:06:08Z",
   "daily": {
@@ -42,4 +43,9 @@
     "2026-05-03": 1832,
     "2026-05-04": 1830
   }
+=======
+  "total_clones": 0,
+  "last_updated": "",
+  "daily": {}
+>>>>>>> origin/dgx-fix
 }

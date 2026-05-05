@@ -13,9 +13,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+<<<<<<< HEAD
       - uses: actions/checkout@v6
         with:
           token: ${{ secrets.TRAFFIC_TOKEN }}
+=======
+      - uses: actions/checkout@v4
+>>>>>>> origin/dgx-fix
 
       - name: Fetch clone traffic
         env:

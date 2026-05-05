@@ -4972,8 +4972,13 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "openjarvis"
 version = "0.1.1"
+=======
+name = "openjarvisai"
+version = "0.1.0"
+>>>>>>> origin/dgx-fix
 source = { editable = "." }
 dependencies = [
     { name = "click" },

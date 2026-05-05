@@ -1,7 +1,11 @@
 {
   "schemaVersion": 1,
   "label": "Git Clones",
+<<<<<<< HEAD
   "message": "46,364",
+=======
+  "message": "0",
+>>>>>>> origin/dgx-fix
   "color": "green",
   "namedLogo": "git"
 }

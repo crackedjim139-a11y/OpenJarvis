@@ -94,11 +94,16 @@ src/openjarvis/channels/whatsapp_baileys_bridge/node_modules/
 
 # SQLite in-memory artifacts
 :memory:
+<<<<<<< HEAD
+=======
+MagicMock/
+>>>>>>> origin/dgx-fix
 
 # Second Repos
 Inline/
 scratch/
 
+<<<<<<< HEAD
 # ---------------------------------------------------------------------------
 # Distillation runtime artifacts (defense in depth — these should always live
 # in ~/.openjarvis/, never inside the source tree, but we ignore them here in
@@ -111,3 +116,11 @@ learning.db
 **/learning/benchmarks/
 **/teacher_traces/
 *.session.json
+=======
+# SQLite in-memory artifacts
+:memory:
+MagicMock/
+
+# Second Repos
+Inline/
+>>>>>>> origin/dgx-fix
