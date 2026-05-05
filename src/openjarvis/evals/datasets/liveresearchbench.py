@@ -49,7 +49,11 @@ def _parse_checklist(checklist: Any) -> List[str]:
 
 
 class LiveResearchBenchDataset(DatasetProvider):
+<<<<<<< HEAD
     """LiveResearchBench — Salesforce's expert-curated deep research benchmark.
+=======
+    """Salesforce LiveResearchBench — 80 expert-curated research tasks.
+>>>>>>> origin/feat/eval-pipeline
 
     Loads tasks from HuggingFace with per-task checklists used for
     coverage-based evaluation. Tasks span 7 domains (Science/Tech, Business,

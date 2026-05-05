@@ -1,0 +1,37 @@
+# taubench evaluation for kimi-k25
+
+[meta]
+name = "taubench-kimi-k25-pod"
+description = "taubench on moonshotai/Kimi-K2.5 (pod evaluation)"
+
+[defaults]
+temperature = 0.7
+max_tokens = 4096
+
+[judge]
+model = "gpt-5-mini-2025-08-07"
+temperature = 0.0
+engine = "cloud"
+
+[run]
+trace_detail = true
+max_workers = 1
+output_dir = "/tmp/results/kimi-k25/"
+seed = 42
+
+telemetry = true
+gpu_metrics = true
+[engine.vllm]
+host = "http://localhost:8000"
+
+[[models]]
+name = "moonshotai/Kimi-K2.5"
+engine = "vllm"
+
+param_count_b = 1000.0
+active_params_b = 32.0
+[[benchmarks]]
+name = "taubench"
+backend = "jarvis-direct"
+split = "airline,retail"
+max_turns = 30

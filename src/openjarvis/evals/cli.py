@@ -132,10 +132,6 @@ BENCHMARKS = {
         "category": "coding",
         "description": "LiveCodeBench competitive programming",
     },
-    "liveresearch": {
-        "category": "agentic",
-        "description": "DeepResearchBench report generation (alias: deepresearch)",
-    },
     "deepresearch": {
         "category": "agentic",
         "description": "DeepResearchBench deep research report generation",
@@ -174,6 +170,7 @@ def _build_backend(
     gpu_metrics: bool = False,
     model: Optional[str] = None,
     max_turns: Optional[int] = None,
+    engine_config: Optional[dict] = None,
 ):
     """Construct the appropriate backend."""
     if backend_name == "jarvis-agent":
@@ -181,6 +178,7 @@ def _build_backend(
 
         return JarvisAgentBackend(
             engine_key=engine_key,
+            engine_config=engine_config,
             agent_name=agent_name,
             tools=tools,
             telemetry=telemetry,
@@ -193,6 +191,7 @@ def _build_backend(
 
         return JarvisDirectBackend(
             engine_key=engine_key,
+            engine_config=engine_config,
             telemetry=telemetry,
             gpu_metrics=gpu_metrics,
         )
@@ -343,16 +342,23 @@ def _build_dataset(benchmark: str, subset: str | None = None):
         from openjarvis.evals.datasets.livecodebench import LiveCodeBenchDataset
 
         return LiveCodeBenchDataset()
-    elif benchmark in ("liveresearch", "deepresearch"):
-        from openjarvis.evals.datasets.liveresearch import LiveResearchBenchDataset
+    elif benchmark == "deepresearch":
+        from openjarvis.evals.datasets.deepresearch import DeepResearchBenchDataset
 
-        return LiveResearchBenchDataset(path=subset)
+        return DeepResearchBenchDataset(path=subset)
     elif benchmark == "liveresearchbench":
         from openjarvis.evals.datasets.liveresearchbench import (
+<<<<<<< HEAD
             LiveResearchBenchDataset as LRBDataset,
         )
 
         return LRBDataset()
+=======
+            LiveResearchBenchDataset,
+        )
+
+        return LiveResearchBenchDataset()
+>>>>>>> origin/feat/eval-pipeline
     elif benchmark == "toolcall15":
         from openjarvis.evals.datasets.toolcall15 import ToolCall15Dataset
 
@@ -501,16 +507,23 @@ def _build_scorer(benchmark: str, judge_backend, judge_model: str):
         from openjarvis.evals.scorers.livecodebench import LiveCodeBenchScorer
 
         return LiveCodeBenchScorer(judge_backend, judge_model)
-    elif benchmark in ("liveresearch", "deepresearch"):
-        from openjarvis.evals.scorers.liveresearch import LiveResearchBenchScorer
+    elif benchmark == "deepresearch":
+        from openjarvis.evals.scorers.deepresearch import DeepResearchBenchScorer
 
-        return LiveResearchBenchScorer(judge_backend, judge_model)
+        return DeepResearchBenchScorer(judge_backend, judge_model)
     elif benchmark == "liveresearchbench":
         from openjarvis.evals.scorers.liveresearchbench import (
+<<<<<<< HEAD
             LiveResearchBenchScorer as LRBScorer,
         )
 
         return LRBScorer(judge_backend, judge_model)
+=======
+            LiveResearchBenchScorer,
+        )
+
+        return LiveResearchBenchScorer(judge_backend, judge_model)
+>>>>>>> origin/feat/eval-pipeline
     elif benchmark == "toolcall15":
         from openjarvis.evals.scorers.toolcall15 import ToolCall15Scorer
 
@@ -674,6 +687,7 @@ def _run_single(config, console: Optional[Console] = None) -> object:
         gpu_metrics=getattr(config, "gpu_metrics", False),
         model=config.model,
         max_turns=getattr(config, "max_turns", None),
+        engine_config=getattr(config, "engine_config", {}),
     )
     dataset = _build_dataset(config.benchmark)
     # Inject engine config for benchmarks that run their own simulation
@@ -965,7 +979,7 @@ def _run_from_config(
     console = Console()
 
     suite = load_eval_config(config_path)
-    run_configs = expand_suite(suite)
+    run_configs = expand_suite(suite, config_path=config_path)
 
     # Filter by model name substring if requested
     if model_filter:

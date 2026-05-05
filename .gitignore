@@ -45,14 +45,11 @@ Thumbs.db
 *.db
 *.jsonl
 *.npz
-*.log
 results/
 logs/
 traces/
 coding_task_*
 get-pip.py
-# Junk from mocked-path tests that write to their mock's __repr__ as a path
-MagicMock/
 
 # MkDocs build output
 site/
@@ -63,7 +60,9 @@ frontend/dist/
 src/openjarvis/server/static/
 
 # Desktop (Tauri)
-frontend/src-tauri/target/
+desktop/node_modules/
+desktop/dist/
+desktop/src-tauri/target/
 
 # Worktrees
 .worktrees/
@@ -102,6 +101,7 @@ MagicMock/
 # Second Repos
 Inline/
 scratch/
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 # ---------------------------------------------------------------------------
@@ -124,3 +124,8 @@ MagicMock/
 # Second Repos
 Inline/
 >>>>>>> origin/dgx-fix
+=======
+src/openjarvis/evals/configs/*.toml
+draco_Getting Started_dipc_mlbatch-getting-started.md at master · IROC_draco (1).pdf
+pod_configs copy/*
+>>>>>>> origin/feat/eval-pipeline

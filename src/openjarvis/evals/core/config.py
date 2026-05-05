@@ -205,9 +205,19 @@ def load_eval_config(path: str | Path) -> EvalSuiteConfig:
                 temperature=float(b["temperature"]) if "temperature" in b else None,
                 max_tokens=int(b["max_tokens"]) if "max_tokens" in b else None,
                 subset=b.get("subset"),
+<<<<<<< HEAD
                 record_ids=record_ids,
+=======
+                max_turns=int(b["max_turns"]) if "max_turns" in b else None,
+>>>>>>> origin/feat/eval-pipeline
             )
         )
+
+    # Parse [engine.*] sections for engine-specific configurations
+    # In TOML, [engine.vllm] creates {"engine": {"vllm": {...}}}
+    engine_configs = {}
+    if "engine" in raw and isinstance(raw["engine"], dict):
+        engine_configs = dict(raw["engine"])
 
     return EvalSuiteConfig(
         meta=meta,
@@ -216,10 +226,11 @@ def load_eval_config(path: str | Path) -> EvalSuiteConfig:
         run=execution,
         models=models,
         benchmarks=benchmarks,
+        engine_configs=engine_configs,
     )
 
 
-def expand_suite(suite: EvalSuiteConfig) -> List[RunConfig]:
+def expand_suite(suite: EvalSuiteConfig, config_path: Optional[str] = None) -> List[RunConfig]:
     """Expand an EvalSuiteConfig into a list of RunConfigs (models x benchmarks).
 
     Merge precedence (highest wins):
@@ -227,6 +238,7 @@ def expand_suite(suite: EvalSuiteConfig) -> List[RunConfig]:
 
     Args:
         suite: The parsed eval suite config.
+        config_path: Optional path to the original config file.
 
     Returns:
         List of RunConfig, one per model-benchmark pair.
@@ -275,6 +287,11 @@ def expand_suite(suite: EvalSuiteConfig) -> List[RunConfig]:
             # Judge engine: suite.judge.engine > "cloud"
             judge_engine = suite.judge.engine or "cloud"
 
+            # Get engine-specific config for this model's engine
+            engine_config = {}
+            if model.engine and model.engine in suite.engine_configs:
+                engine_config = suite.engine_configs[model.engine]
+
             configs.append(
                 RunConfig(
                     benchmark=bench.name,
@@ -287,8 +304,10 @@ def expand_suite(suite: EvalSuiteConfig) -> List[RunConfig]:
                     judge_model=judge_model,
                     judge_engine=judge_engine,
                     engine_key=model.engine,
+                    engine_config=engine_config,
                     agent_name=bench.agent,
                     tools=list(bench.tools),
+                    max_turns=bench.max_turns,
                     output_path=output_path,
                     seed=suite.run.seed,
                     dataset_split=bench.split,
@@ -304,8 +323,12 @@ def expand_suite(suite: EvalSuiteConfig) -> List[RunConfig]:
                     sheets_spreadsheet_id=suite.run.sheets_spreadsheet_id,
                     sheets_worksheet=suite.run.sheets_worksheet,
                     sheets_credentials_path=suite.run.sheets_credentials_path,
+<<<<<<< HEAD
                     max_turns=suite.run.max_turns,
                     record_ids=bench.record_ids,
+=======
+                    config_path=config_path,
+>>>>>>> origin/feat/eval-pipeline
                 )
             )
 

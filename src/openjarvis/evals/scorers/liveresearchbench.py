@@ -64,6 +64,7 @@ Return one judgment per checklist item, indexed in the same order as above.
 Be rigorous: `covered: true` only if the report genuinely satisfies the item."""
 
 
+<<<<<<< HEAD
 def _parse_judge_response(raw: str, num_items: int) -> List[Dict[str, Any]]:
     """Extract per-item judgments from the judge's raw response.
 
@@ -159,6 +160,10 @@ class LiveResearchBenchScorer(LLMJudgeScorer):
     model's report. Score = fraction covered. Tasks with score >=
     ``PASS_THRESHOLD`` (default 0.5) are marked correct.
     """
+=======
+class LiveResearchBenchScorer(LLMJudgeScorer):
+    """Checklist + quality scorer for Salesforce LiveResearchBench."""
+>>>>>>> origin/feat/eval-pipeline
 
     scorer_id = "liveresearchbench"
 
